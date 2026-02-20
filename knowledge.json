@@ -1,0 +1,50 @@
+[
+  {
+    "question": "pod stuck in termination",
+    "answer": "Check finalizers and preStop hooks, then describe the pod (`kubectl describe pod <name>`) and inspect events. If needed, force delete with `kubectl delete pod <name> --grace-period=0 --force`."
+  },
+  {
+    "question": "pod crashloopbackoff",
+    "answer": "View container logs (`kubectl logs <pod> -c <container> --previous`) and describe the pod to check restart reasons, image issues, env vars, and probes."
+  },
+  {
+    "question": "imagepullbackoff",
+    "answer": "Verify image name/tag, registry access, and imagePullSecrets. Then run `kubectl describe pod <name>` to see the exact pull error."
+  },
+  {
+    "question": "How to fix Kubernetes cluster issues",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Hi",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "CrashLoopBackOff next steps",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "scheduler timeout in kubernetes",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "openstack cinder volume attach fails",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Give me openstack command to check volumes",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  }
+]
