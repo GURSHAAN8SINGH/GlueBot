@@ -3,3 +3,5 @@ uvicorn
 streamlit
 requests
 python-dotenv
+pypdf
+scikit-learn

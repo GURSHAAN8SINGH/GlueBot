@@ -1,0 +1,203 @@
+[
+  {
+    "topic": "CrashLoopBackOff next steps",
+    "type": "issue_pattern",
+    "count": 3,
+    "status": "memorized",
+    "first_seen": "2026-04-06T00:00:00+00:00",
+    "last_seen": "2026-06-16T13:38:55+00:00",
+    "last_user": "operator1",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "vepg issue after deployment",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-04-06T09:36:39+00:00",
+    "last_seen": "2026-04-06T09:36:39+00:00",
+    "last_user": "admin1",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "epg signaling error during test run",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-04-06T09:37:04+00:00",
+    "last_seen": "2026-04-06T09:37:04+00:00",
+    "last_user": "admin1",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "openstack command to set a server state as active",
+    "type": "issue_pattern",
+    "count": 2,
+    "status": "trending",
+    "first_seen": "2026-04-07T07:39:50+00:00",
+    "last_seen": "2026-04-27T07:05:28+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "what is kube external error",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-04-08T09:53:57+00:00",
+    "last_seen": "2026-04-08T09:53:57+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "The purpose of this checkpoint The purpose of the checkpoint is to monitor the PFCP session number and rate in UPF (User Plane Function) during BH phase. It passes only when the value is in a specified range. The results depends on the subscriber number and traffic model defined in the case.  We first set the checkpoint range based on the test result when the test case is created then will tune it when it is impacted by expected application behavior change.  Sometimes 1% deviation due to test environment can't be avoided so normally we set the checkpoint range by +- 2%.  EPG Common rule of tuning checkpoints in stability test cases - Cloud Packet Core - PDU Packet Core Confluence  If checkpoint fails, that means the degradation or improvement is more than 2% compared with previous passed build. Need to analyze further to confirm whether there is any unexpected behavior change.  KPIs/Values Checked:           PDCdb_PFCP_sessions  The legacy KPI PDCdb_PFCP_requests_second tracks all three counters combined. It's not easy to do troubleshooting when it failed. So now we check them separately: PDCdb_PFCP_request_create_second: PDCdb_PFCP_request_modify_second: PDCdb_PFCP_request_report_second:",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-04-08T14:08:58+00:00",
+    "last_seen": "2026-04-08T14:08:58+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "pod is failing but I do not know why",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-04-20T05:24:59+00:00",
+    "last_seen": "2026-04-20T05:24:59+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 1 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 2 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 3 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 4 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 5 since the last execution does not contain Exit status code. ERROR The command does not contain exit status code in the response after 5 repetitions. The command exit status is set based on command execution status. WARN Error when trying to uninstall Dallas on host 'pccc-tool-245-1-1', continue cleanup",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-04-21T04:27:00+00:00",
+    "last_seen": "2026-04-21T04:27:00+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "give me nova commands",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-10T07:10:57+00:00",
+    "last_seen": "2026-06-10T07:10:57+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "what is the command to hard reboot an openstack instance",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-10T08:08:27+00:00",
+    "last_seen": "2026-06-10T08:08:27+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "volume issue",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-10T08:51:52+00:00",
+    "last_seen": "2026-06-10T08:51:52+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "give me the command to check pod logs",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-10T09:59:05+00:00",
+    "last_seen": "2026-06-10T09:59:05+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "give me the command to list all OpenStack volumes in error state",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-11T06:56:33+00:00",
+    "last_seen": "2026-06-11T06:56:33+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "pod is failing",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-11T07:00:43+00:00",
+    "last_seen": "2026-06-11T07:00:43+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "something weird is happening with my neutron agent",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-11T07:02:15+00:00",
+    "last_seen": "2026-06-11T07:02:15+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "I'm targeting openstack",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-11T07:09:00+00:00",
+    "last_seen": "2026-06-11T07:09:00+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "paramiko is not syncing on the dallas tool server",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-11T08:45:59+00:00",
+    "last_seen": "2026-06-11T08:45:59+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "how do I scale a deployment in kubernetes?",
+    "type": "issue_pattern",
+    "count": 3,
+    "status": "memorized",
+    "first_seen": "2026-06-11T09:38:36+00:00",
+    "last_seen": "2026-06-11T09:41:35+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "what is the command to drain a kubernetes node?",
+    "type": "issue_pattern",
+    "count": 2,
+    "status": "trending",
+    "first_seen": "2026-06-11T09:43:26+00:00",
+    "last_seen": "2026-06-11T09:57:34+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "how do I cordon a kubernetes node?",
+    "type": "issue_pattern",
+    "count": 3,
+    "status": "memorized",
+    "first_seen": "2026-06-11T10:05:35+00:00",
+    "last_seen": "2026-06-11T10:10:24+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "how to drain a node in kubernetes",
+    "type": "issue_pattern",
+    "count": 3,
+    "status": "memorized",
+    "first_seen": "2026-06-11T10:12:55+00:00",
+    "last_seen": "2026-06-11T10:18:15+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  },
+  {
+    "topic": "there is an RBAC permission denied error on the service account",
+    "type": "issue_pattern",
+    "count": 1,
+    "status": "observed",
+    "first_seen": "2026-06-11T12:18:14+00:00",
+    "last_seen": "2026-06-11T12:18:14+00:00",
+    "latest_details": "Repeated unresolved incident or new Team Glue signal."
+  }
+]

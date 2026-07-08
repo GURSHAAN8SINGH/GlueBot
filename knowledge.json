@@ -4,47 +4,235 @@
     "answer": "Check finalizers and preStop hooks, then describe the pod (`kubectl describe pod <name>`) and inspect events. If needed, force delete with `kubectl delete pod <name> --grace-period=0 --force`."
   },
   {
+    "question": "namespace stuck in terminating state",
+    "answer": "Step 1: Check namespace status: `kubectl get ns`. Step 2: Export namespace yaml: `kubectl get ns <ns> -o yaml > tmp.yaml`. Step 3: Edit tmp.yaml and remove the value under `finalizers:` (delete the `kubernetes` entry). Step 4: Start proxy in one terminal: `kubectl proxy` (keep it running). Step 5: In another terminal, apply the finalize call: `curl -k -H 'Content-Type: application/yaml' -X PUT --data-binary @tmp.yaml http://127.0.0.1:8001/api/v1/namespaces/<ns>/finalize`. If this does not work, re-orchestration may be required as recovery."
+  },
+  {
+    "question": "namespace terminating",
+    "answer": "Step 1: Check namespace status: `kubectl get ns`. Step 2: Export namespace yaml: `kubectl get ns <ns> -o yaml > tmp.yaml`. Step 3: Edit tmp.yaml and remove the value under `finalizers:` (delete the `kubernetes` entry). Step 4: Start proxy in one terminal: `kubectl proxy` (keep it running). Step 5: In another terminal, apply the finalize call: `curl -k -H 'Content-Type: application/yaml' -X PUT --data-binary @tmp.yaml http://127.0.0.1:8001/api/v1/namespaces/<ns>/finalize`. If this does not work, re-orchestration may be required as recovery."
+  },
+  {
+    "question": "how to delete a stuck namespace",
+    "answer": "Step 1: Check namespace status: `kubectl get ns`. Step 2: Export namespace yaml: `kubectl get ns <ns> -o yaml > tmp.yaml`. Step 3: Edit tmp.yaml and remove the value under `finalizers:` (delete the `kubernetes` entry). Step 4: Start proxy in one terminal: `kubectl proxy` (keep it running). Step 5: In another terminal, apply the finalize call: `curl -k -H 'Content-Type: application/yaml' -X PUT --data-binary @tmp.yaml http://127.0.0.1:8001/api/v1/namespaces/<ns>/finalize`. If this does not work, re-orchestration may be required as recovery."
+  },
+  {
     "question": "pod crashloopbackoff",
-    "answer": "View container logs (`kubectl logs <pod> -c <container> --previous`) and describe the pod to check restart reasons, image issues, env vars, and probes."
+    "answer": "For CrashLoopBackOff: run `kubectl logs <pod> -c <container> --previous -n <ns>` to see why it crashed. Then `kubectl describe pod <pod> -n <ns>` for exit codes, probe failures, env vars, and resource limits. Common causes: app error on startup, bad config/secret, failing liveness probe, or OOM."
+  },
+  {
+    "question": "pod stuck in crashloopbackoff",
+    "answer": "For CrashLoopBackOff: run `kubectl logs <pod> -c <container> --previous -n <ns>` to see why it crashed. Then `kubectl describe pod <pod> -n <ns>` for exit codes, probe failures, env vars, and resource limits. Common causes: app error on startup, bad config/secret, failing liveness probe, or OOM."
   },
   {
     "question": "imagepullbackoff",
     "answer": "Verify image name/tag, registry access, and imagePullSecrets. Then run `kubectl describe pod <name>` to see the exact pull error."
   },
   {
-    "question": "How to fix Kubernetes cluster issues",
-    "answer": "",
-    "status": "unresolved",
-    "note": "Captured from unknown user issue. Fill answer later."
+    "question": "nova list instances",
+    "answer": "`nova list` or `openstack server list`. Add `--all-tenants` for admin view. Filter by status: `openstack server list --status ERROR`."
   },
   {
-    "question": "Hi",
-    "answer": "",
-    "status": "unresolved",
-    "note": "Captured from unknown user issue. Fill answer later."
+    "question": "nova reboot instance",
+    "answer": "Soft reboot: `nova reboot <instance>`. Hard reboot: `nova reboot --hard <instance>` or `openstack server reboot --hard <instance>`."
   },
   {
-    "question": "CrashLoopBackOff next steps",
-    "answer": "",
-    "status": "unresolved",
-    "note": "Captured from unknown user issue. Fill answer later."
+    "question": "nova start instance in shutoff state",
+    "answer": "`nova start <instance>` or `openstack server start <instance>`. Verify state first with `openstack server show <instance> -c status`."
   },
   {
-    "question": "scheduler timeout in kubernetes",
-    "answer": "",
-    "status": "unresolved",
-    "note": "Captured from unknown user issue. Fill answer later."
+    "question": "openstack set server state active",
+    "answer": "`nova reset-state --active <instance>` or `openstack server set --state active <instance>`. Use when instance is stuck in ERROR."
+  },
+  {
+    "question": "openstack instance stuck in error",
+    "answer": "Check `openstack server show <instance>` for fault info. Try `nova reset-state --active <instance>` then `nova reboot --hard <instance>`. Check nova-compute logs on the host."
+  },
+  {
+    "question": "openstack check volumes",
+    "answer": "`openstack volume list` to list all. `openstack volume show <id>` for details. Filter: `openstack volume list --status available` or `--status error`."
   },
   {
     "question": "openstack cinder volume attach fails",
-    "answer": "",
-    "status": "unresolved",
-    "note": "Captured from unknown user issue. Fill answer later."
+    "answer": "Check `openstack volume show <vol>` for status. Ensure volume is `available`. Check target instance is `ACTIVE`. Review cinder-volume logs. Try `cinder reset-state --state available <vol>` if stuck."
   },
   {
-    "question": "Give me openstack command to check volumes",
-    "answer": "",
-    "status": "unresolved",
-    "note": "Captured from unknown user issue. Fill answer later."
+    "question": "openstack delete volumes in available state",
+    "answer": "Dry-run: `for vol in $(openstack volume list -f value -c ID -c Status | awk '$2==\"available\" {print $1}'); do echo openstack volume delete \"$vol\"; done`. Remove `echo` to execute."
+  },
+  {
+    "question": "openstack restart server",
+    "answer": "`openstack server reboot <instance>` for soft reboot. `openstack server reboot --hard <instance>` for hard reboot. Use hard reboot if soft reboot hangs."
+  },
+  {
+    "question": "openstack check nova computes",
+    "answer": "`openstack compute service list` or `nova service-list`. Look for `State: up` and `Status: enabled`. Disable unhealthy: `nova service-disable <host> nova-compute`."
+  },
+  {
+    "question": "openstack set gigabytes quota",
+    "answer": "`openstack quota set --gigabytes -1 <project>` for unlimited. Or `cinder quota-update --gigabytes -1 <tenant-id>`. Verify with `openstack quota show <project>`."
+  },
+  {
+    "question": "openstack cpu steal",
+    "answer": "CPU steal indicates the hypervisor is overcommitting CPU. Check host load with `top` (look at %st). Solutions: migrate VMs to less loaded hosts, reduce CPU overcommit ratio in nova.conf, or resize instances."
+  },
+  {
+    "question": "neutron networking commands",
+    "answer": "List networks: `openstack network list`. Show: `openstack network show <net>`. List ports: `openstack port list`. Check agents: `openstack network agent list`."
+  },
+  {
+    "question": "kubernetes check ingress",
+    "answer": "`kubectl get ingress -A` to list all. `kubectl describe ingress <name> -n <ns>` for details. Check ingress controller logs and backend service endpoints."
+  },
+  {
+    "question": "kubernetes pod pending",
+    "answer": "Pod in Pending usually means scheduling failure. Check `kubectl describe pod <pod>` for events. Common causes: insufficient resources, node affinity/taints, PVC not bound."
+  },
+  {
+    "question": "kubernetes scheduler timeout",
+    "answer": "Check scheduler logs: `kubectl logs -n kube-system -l component=kube-scheduler`. Look for resource pressure, unschedulable nodes, or pending PVCs blocking scheduling."
+  },
+  {
+    "question": "vepg issue after deployment",
+    "answer": "Check VEPG instance health via OpenStack (`openstack server show`), verify attached volumes, check network connectivity to signaling interfaces, review recent config changes, and check service logs on the VEPG VMs."
+  },
+  {
+    "question": "vepg issues",
+    "answer": "Check VEPG instance health via OpenStack (`openstack server show`), verify attached volumes, check network connectivity to signaling interfaces, review recent config changes, and check service logs on the VEPG VMs."
+  },
+  {
+    "question": "vepg having issues",
+    "answer": "Check VEPG instance health via OpenStack (`openstack server show`), verify attached volumes, check network connectivity to signaling interfaces, review recent config changes, and check service logs on the VEPG VMs."
+  },
+  {
+    "question": "epg signaling error",
+    "answer": "For EPG signaling errors: check SCTP/diameter connectivity, verify EPG pod/VM health, review signaling interface routes, check for packet drops with tcpdump, and verify no recent config or certificate changes."
+  },
+  {
+    "question": "ssr operational issues",
+    "answer": "For SSR issues: verify session state replication is healthy, check inter-node connectivity, review SSR logs for split-brain or sync failures, and confirm no recent scaling or restart events."
+  },
+  {
+    "question": "liveness probe failing",
+    "answer": "Check the probe endpoint health (`curl localhost:<port><path>`). Review `initialDelaySeconds`, `periodSeconds`, `timeoutSeconds`. Increase timeout if app startup is slow. Check container resource limits."
+  },
+  {
+    "question": "what is a liveness probe",
+    "answer": "A liveness probe tells Kubernetes whether a container is still running correctly. If it fails, Kubernetes kills and restarts the container. Configured with `httpGet`, `tcpSocket`, or `exec`. Key settings: `initialDelaySeconds` (wait before first check), `periodSeconds` (how often), `failureThreshold` (how many failures before restart)."
+  },
+  {
+    "question": "what is a readiness probe",
+    "answer": "A readiness probe tells Kubernetes whether a container is ready to receive traffic. Unlike liveness, a failed readiness probe removes the pod from service endpoints but does NOT restart it. Use it to hold traffic during slow startup or when a dependency like a DB is not ready."
+  },
+  {
+    "question": "readiness probe failing",
+    "answer": "Readiness probe failure removes the pod from service endpoints. Check the probe endpoint, dependency readiness (DB, cache), and startup order. Pod stays running but receives no traffic."
+  },
+  {
+    "question": "kubernetes OOMKilled",
+    "answer": "Container exceeded memory limit. Check `kubectl describe pod` for OOMKilled reason. Increase `resources.limits.memory` or investigate memory leaks in the application."
+  },
+  {
+    "question": "openstack keystone token issue",
+    "answer": "Re-source your RC file: `source openrc.sh`. Check token expiry. Verify Keystone endpoint: `openstack catalog show identity`. Regenerate token: `openstack token issue`."
+  },
+  {
+    "question": "KUBE_INTERNAL and KUBE_EXTERNAL error",
+    "answer": "Step 1: Login to each master node of the test channel: `ssh eccd@<master-node>`. Step 2: Check for DROP rule on API server port 6443: `sudo iptables -L -n -v --line-numbers | grep 6443 | grep -i DROP`. Step 3: If a DROP rule exists, note the rule number from the first column. Step 4: Delete the DROP rule: `sudo iptables -D INPUT <rule-number>`. Example: if rule number is 2, run `sudo iptables -D INPUT 2`. Repeat on all master nodes of the test channel."
+  },
+  {
+    "question": "kube internal kube external error fix",
+    "answer": "Step 1: Login to each master node of the test channel: `ssh eccd@<master-node>`. Step 2: Check for DROP rule on API server port 6443: `sudo iptables -L -n -v --line-numbers | grep 6443 | grep -i DROP`. Step 3: If a DROP rule exists, note the rule number from the first column. Step 4: Delete the DROP rule: `sudo iptables -D INPUT <rule-number>`. Example: if rule number is 2, run `sudo iptables -D INPUT 2`. Repeat on all master nodes of the test channel."
+  },
+  {
+    "question": "iptables drop rule blocking api server port 6443",
+    "answer": "Step 1: Login to each master node of the test channel: `ssh eccd@<master-node>`. Step 2: Check for DROP rule on API server port 6443: `sudo iptables -L -n -v --line-numbers | grep 6443 | grep -i DROP`. Step 3: If a DROP rule exists, note the rule number from the first column. Step 4: Delete the DROP rule: `sudo iptables -D INPUT <rule-number>`. Example: if rule number is 2, run `sudo iptables -D INPUT 2`. Repeat on all master nodes of the test channel."
+  },
+  {
+    "question": "how to check nels server connectivity on master and worker node",
+    "answer": "Step 1: Login to the cluster: `ssh eccd@pccc-xxxx-x`. Step 2: Check nodes and get their IPs: `kubectl get nodes -o wide`. Step 3: SSH into the master or worker node using its IP: `ssh <node-ip>`. Step 4: Check NELS server connectivity from the node: `curl -v <nels-server-url>`. Repeat Step 3-4 for each node you want to verify."
+  },
+  {
+    "question": "nels server connectivity check",
+    "answer": "Step 1: Login to the cluster: `ssh eccd@pccc-xxxx-x`. Step 2: Check nodes and get their IPs: `kubectl get nodes -o wide`. Step 3: SSH into the master or worker node using its IP: `ssh <node-ip>`. Step 4: Check NELS server connectivity from the node: `curl -v <nels-server-url>`. Repeat Step 3-4 for each node you want to verify."
+  },
+  {
+    "question": "nels server not reachable from node",
+    "answer": "Step 1: Login to the cluster: `ssh eccd@pccc-xxxx-x`. Step 2: Check nodes and get their IPs: `kubectl get nodes -o wide`. Step 3: SSH into the master or worker node using its IP: `ssh <node-ip>`. Step 4: Check NELS server connectivity from the node: `curl -v <nels-server-url>`. Repeat Step 3-4 for each node you want to verify."
+  },
+  {
+    "question": "how to access kubeconfig externally from shell",
+    "answer": "Shared kubeconfig files on NFS paths like `/proj` or `/lab` have been removed due to security risks. Use the vitamin tool to generate kubeconfig locally.\n\nStep 1: Generate kubeconfig using vitamin: `/proj/sgsn-tools/vitamin/LATEST/bin/vitamin <test-channel> --create-kube-config $HOME/kubeconfig`\n\nExample: `/proj/sgsn-tools/vitamin/LATEST/bin/vitamin pccc-tc-322-5 --create-kube-config $HOME/kubeconfig`\n\nThis creates the file at: `$HOME/kubeconfig/<test-channel>/<cluster>.conf`\n\nStep 2: Set the KUBECONFIG environment variable: `setenv KUBECONFIG $HOME/kubeconfig/<test-channel>/<cluster>.conf`\n\nStep 3: Verify access: `kubectl get ns`"
+  },
+  {
+    "question": "kubeconfig access from rosso or mesos node",
+    "answer": "Shared kubeconfig files on NFS paths like `/proj` or `/lab` have been removed due to security risks. Use the vitamin tool to generate kubeconfig locally.\n\nStep 1: Generate kubeconfig using vitamin: `/proj/sgsn-tools/vitamin/LATEST/bin/vitamin <test-channel> --create-kube-config $HOME/kubeconfig`\n\nStep 2: Set the KUBECONFIG environment variable: `setenv KUBECONFIG $HOME/kubeconfig/<test-channel>/<cluster>.conf`\n\nStep 3: Verify access: `kubectl get ns`"
+  },
+  {
+    "question": "vitamin tool create kubeconfig",
+    "answer": "Shared kubeconfig files on NFS paths like `/proj` or `/lab` have been removed due to security risks. Use the vitamin tool to generate kubeconfig locally.\n\nStep 1: Generate kubeconfig using vitamin: `/proj/sgsn-tools/vitamin/LATEST/bin/vitamin <test-channel> --create-kube-config $HOME/kubeconfig`\n\nStep 2: Set the KUBECONFIG environment variable: `setenv KUBECONFIG $HOME/kubeconfig/<test-channel>/<cluster>.conf`\n\nStep 3: Verify access: `kubectl get ns`"
+  },
+  {
+    "question": "kubeconfig file removed from proj or lab path",
+    "answer": "Shared kubeconfig files on NFS paths like `/proj` or `/lab` have been removed due to security risks. Use the vitamin tool to generate kubeconfig locally.\n\nStep 1: Generate kubeconfig using vitamin: `/proj/sgsn-tools/vitamin/LATEST/bin/vitamin <test-channel> --create-kube-config $HOME/kubeconfig`\n\nStep 2: Set the KUBECONFIG environment variable: `setenv KUBECONFIG $HOME/kubeconfig/<test-channel>/<cluster>.conf`\n\nStep 3: Verify access: `kubectl get ns`"
+  },
+  {
+    "question": "reorchestration steps for pccc-334-1",
+    "answer": "BEFORE REORCHESTRATION: Set the CCD environment template: CCD_ENV_TEMPLATE = test_env_template_capo_ccd_pccg_port_redu\n\nPOST REORCHESTRATION (Active-Active SRIOV fix):\nStep 1: Login to compute-0-2 and compute-0-3: `ssh ceeinfra@compute-0-2` and `ssh ceeinfra@compute-0-3`\nStep 2: Run `ip a` to identify SRIOV interfaces (pt0, pt1, pt2, pt3)\nStep 3: For each interface run: `ip link show ptX`\nStep 4: Find VFs with `spoof checking off, link-state auto, trust off` and run: `sudo ip link set ptX vf <vf-number> trust on`\n\nExample (VFs 6, 9, 13 on pt0):\n`sudo ip link set pt0 vf 6 trust on`\n`sudo ip link set pt0 vf 9 trust on`\n`sudo ip link set pt0 vf 13 trust on`\n\nRepeat for all pt interfaces on both compute nodes."
+  },
+  {
+    "question": "pccc-334-1 reorchestration procedure",
+    "answer": "BEFORE REORCHESTRATION: Set the CCD environment template: CCD_ENV_TEMPLATE = test_env_template_capo_ccd_pccg_port_redu\n\nPOST REORCHESTRATION (Active-Active SRIOV fix):\nStep 1: Login to compute-0-2 and compute-0-3.\nStep 2: Run `ip link show ptX` for each SRIOV interface (pt0-pt3).\nStep 3: Find VFs with `spoof checking off, link-state auto, trust off` and run: `sudo ip link set ptX vf <vf-number> trust on`\nRepeat for all pt interfaces on both compute nodes."
+  },
+  {
+    "question": "334-1 special template reorchestration",
+    "answer": "For pccc-334-1 reorchestration, the CCD environment template to use is: CCD_ENV_TEMPLATE = test_env_template_capo_ccd_pccg_port_redu\n\nAfter reorchestration, login to compute-0-2 and compute-0-3, check each SRIOV interface (pt0-pt3) with `ip link show ptX`, find VFs with `spoof checking off, link-state auto, trust off` and run `sudo ip link set ptX vf <vf-number> trust on` for each."
+  },
+  {
+    "question": "ccd env template for 334-1",
+    "answer": "For pccc-334-1 reorchestration, the CCD environment template to use is: CCD_ENV_TEMPLATE = test_env_template_capo_ccd_pccg_port_redu\n\nAfter reorchestration, login to compute-0-2 and compute-0-3, check each SRIOV interface (pt0-pt3) with `ip link show ptX`, find VFs with `spoof checking off, link-state auto, trust off` and run `sudo ip link set ptX vf <vf-number> trust on` for each."
+  },
+  {
+    "question": "before reorchestration steps pccc-334-1",
+    "answer": "Before starting reorchestration for pccc-334-1, set the CCD environment template: CCD_ENV_TEMPLATE = test_env_template_capo_ccd_pccg_port_redu\n\nAfter reorchestration completes, login to compute-0-2 and compute-0-3, check each SRIOV interface (pt0-pt3) with `ip link show ptX`, find VFs with `spoof checking off, link-state auto, trust off` and run `sudo ip link set ptX vf <vf-number> trust on` for each. This ensures active-active works correctly."
+  },
+  {
+    "question": "post reorchestration sriov trust fix",
+    "answer": "After reorchestration, fix SRIOV VF trust settings for active-active to work correctly.\nStep 1: Login to each compute node: `ssh ceeinfra@compute-0-2` and `ssh ceeinfra@compute-0-3`\nStep 2: For each SRIOV interface (pt0-pt3) run: `ip link show ptX`\nStep 3: Find VFs with `spoof checking off, link-state auto, trust off` and run: `sudo ip link set ptX vf <vf-number> trust on`\nExample: `sudo ip link set pt0 vf 6 trust on`"
+  },
+  {
+    "question": "paramiko failed to sync with dallas tool server",
+    "answer": "This is a DB sync issue caused by a paramiko module failing to install on the tool server. Multiple conflicting paramiko versions may be present.\n\nStep 1: Check dallas system state: `lts_info` \u2014 if it shows `not_initialized`, the sync has failed.\nStep 2: Check installed paramiko versions: `rpm -qa | grep paramiko` \u2014 multiple versions indicate a conflict.\nStep 3: Rebuild the RPM database to recover: `sudo rpm --rebuilddb`\nStep 4: Re-run the dallas sync or reinstall paramiko after the rebuild.\n\nReference ticket: https://eteamproject-alpha.internal.ericsson.com/browse/PCDALLAS-2884"
+  },
+  {
+    "question": "dallas tool server not initialized paramiko issue",
+    "answer": "This is a DB sync issue caused by a paramiko module failing to install on the tool server. Multiple conflicting paramiko versions may be present.\n\nStep 1: Check dallas system state: `lts_info` \u2014 if it shows `not_initialized`, the sync has failed.\nStep 2: Check installed paramiko versions: `rpm -qa | grep paramiko` \u2014 multiple versions indicate a conflict.\nStep 3: Rebuild the RPM database to recover: `sudo rpm --rebuilddb`\nStep 4: Re-run the dallas sync or reinstall paramiko after the rebuild.\n\nReference ticket: https://eteamproject-alpha.internal.ericsson.com/browse/PCDALLAS-2884"
+  },
+  {
+    "question": "rpm rebuilddb dallas paramiko conflict",
+    "answer": "This is a DB sync issue caused by a paramiko module failing to install on the tool server. Multiple conflicting paramiko versions may be present.\n\nStep 1: Check dallas system state: `lts_info` \u2014 if it shows `not_initialized`, the sync has failed.\nStep 2: Check installed paramiko versions: `rpm -qa | grep paramiko` \u2014 multiple versions indicate a conflict.\nStep 3: Rebuild the RPM database to recover: `sudo rpm --rebuilddb`\nStep 4: Re-run the dallas sync or reinstall paramiko after the rebuild.\n\nReference ticket: https://eteamproject-alpha.internal.ericsson.com/browse/PCDALLAS-2884"
+  },
+  {
+    "question": "lts_info shows not_initialized on tool server",
+    "answer": "This is a DB sync issue caused by a paramiko module failing to install on the tool server. Multiple conflicting paramiko versions may be present.\n\nStep 1: Check dallas system state: `lts_info` \u2014 if it shows `not_initialized`, the sync has failed.\nStep 2: Check installed paramiko versions: `rpm -qa | grep paramiko` \u2014 multiple versions indicate a conflict.\nStep 3: Rebuild the RPM database to recover: `sudo rpm --rebuilddb`\nStep 4: Re-run the dallas sync or reinstall paramiko after the rebuild.\n\nReference ticket: https://eteamproject-alpha.internal.ericsson.com/browse/PCDALLAS-2884"
+  },
+  {
+    "question": "dallas paramiko not syncing",
+    "answer": "This is a DB sync issue caused by a paramiko module failing to install on the tool server. Multiple conflicting paramiko versions may be present.\n\nStep 1: Check dallas system state: `lts_info` \u2014 if it shows `not_initialized`, the sync has failed.\nStep 2: Check installed paramiko versions: `rpm -qa | grep paramiko` \u2014 multiple versions indicate a conflict.\nStep 3: Rebuild the RPM database to recover: `sudo rpm --rebuilddb`\nStep 4: Re-run the dallas sync or reinstall paramiko after the rebuild.\n\nReference ticket: https://eteamproject-alpha.internal.ericsson.com/browse/PCDALLAS-2884"
+  },
+  {
+    "question": "how do I scale a deployment in kubernetes?",
+    "answer": "To scale a deployment in Kubernetes, follow these steps:\n\n### Prerequisites\n- Ensure you have `kubectl` installed and configured to connect to your Kubernetes cluster.\n- You must have the appropriate permissions to scale deployments in the namespace you are working in.\n\n### Steps to Scale a Deployment\n\n1. **Identify the Deployment**: First, determine the name of the deployment you wish to scale. You can list all deployments in the current namespace using the following command:\n   ```bash\n   kubectl get deployments\n   ```\n\n2. **Determine Desired Replicas**: Decide on the number of replicas you want for your deployment.\n\n3. **Scale the Deployment**: Use the `scale` command to specify the desired number of replicas. Replace `<deployment-name>` with the name of your deployment and `<desired-replicas>` with the number of replicas you want:\n   ```bash\n   kubectl scale deployment <deployment-name> --replicas=<desired-replicas>\n   ```\n\n4. **Check the Scaling Status**: Verify that the scaling operation has been carried out successfully by running:\n   ```bash\n   kubectl get deployments\n   ```\n   This command will display the updated number of pods in your deployment.\n\n5. **Monitor Your Pods**: Optionally, you can keep an eye on your pods to ensure they are running as expected with the desired number of replicas. Use:\n   ```bash\n   kubectl get pods\n   ```\n\n### Example\nIf you have a deployment named `web-app` and want to scale it to 3 replicas, you would run the following command:\n```bash\nkubectl scale deployment web-app --replicas=3\n```\n\n### Additional Notes\n- You can also edit the deployment configuration directly (using YAML) and apply the changes to scale it, by modifying the `spec.replicas` field, and then running:\n  ```bash\n  kubectl apply -f your-deployment-file.yaml\n  ```\n\nBy following these steps, you should be able to successfully scale a deployment in Kubernetes."
+  },
+  {
+    "question": "how do I cordon a kubernetes node?",
+    "answer": "To cordon a Kubernetes node, follow these steps:\n\n### Prerequisites\n- Ensure you have `kubectl` installed and configured to connect to your Kubernetes cluster.\n- You need sufficient permissions to modify the node's status.\n\n### Steps to Cordon a Kubernetes Node\n\n1. **Identify the Node**: First, determine the name of the node you want to cordon. List all nodes in the cluster by running the following command:\n   ```bash\n   kubectl get nodes\n   ```\n\n2. **Cordon the Node**: Use the following command to cordon the specified node. Replace `<node-name>` with the actual name of your node:\n   ```bash\n   kubectl cordon <node-name>\n   ```\n\n3. **Verify the Node Status**: After cordoning, verify that the node is cordoned by running:\n   ```bash\n   kubectl get nodes\n   ```\n   The output should show the node with `Unschedulable` set to `True`.\n\n### Additional Information\n- Cordon prevents new pods from being scheduled on the node but does not affect any pods that are already running.\n- If you later want to allow scheduling again, you can un-cordon the node by running:\n  ```bash\n  kubectl uncordon <node-name>\n  ```"
+  },
+  {
+    "question": "how to drain a node in kubernetes",
+    "answer": "### Prerequisites\n- Ensure you have `kubectl` installed and configured to connect to your Kubernetes cluster.\n- You need sufficient permissions to modify the node's status.\n\n### Steps to Drain a Kubernetes Node\n\n1. **Identify the Node**: Determine the name of the node you want to drain. You can list all nodes in the cluster by running the following command:\n   ```bash\n   kubectl get nodes\n   ```\n\n2. **Drain the Node**: Use the following command to drain the specified node. Replace `<node-name>` with the actual name of your node:\n   ```bash\n   kubectl drain <node-name> --ignore-daemonsets --delete-local-data\n   ```\n   - The `--ignore-daemonsets` flag allows the draining to skip DaemonSet-managed pods.\n   - The `--delete-local-data` flag allows deletion of pods which use emptyDir (local) volumes. Use this option with caution.\n\n3. **Verify the Node Status**: After draining, you can verify that the node is in a \"drained\" state by running:\n   ```bash\n   kubectl get nodes\n   ```\n   The output should show the node with `SchedulingDisabled` indicating that it has been successfully drained.\n\n### Additional Information\n- Draining a node will evict all the pods scheduled on that node. Make sure that the pods can be rescheduled on other nodes in the cluster.\n- To un-drain the node (allow scheduling again), run:\n  ```bash\n  kubectl uncordon <node-name>\n  ```"
+  },
+  {
+    "question": "CrashLoopBackOff next steps",
+    "answer": "For addressing a `CrashLoopBackOff` issue in a Kubernetes pod, follow these steps:\n\n1. **Check Pod Logs**: Use the following command to inspect the logs of the pod to identify the specific error or issue that caused the crash:\n   ```bash\n   kubectl logs <pod-name> --previous\n   ```\n\n2. **Describe the Pod**: Gain more insights into the pod\u2019s status and events that might indicate why it\u2019s crashing:\n   ```bash\n   kubectl describe pod <pod-name>\n   ```\n\n3. **Check Exit Codes**: Examine the Exit codes from the logs to determine the cause of failure. Common exit codes include:\n   - Exit code 137 (OOMKilled): Indicates that the pod was terminated because it exceeded its memory limit.\n   - Exit code 1: This typically suggests a general application error.\n\n4. **Review Probes**: Ensure that the liveness and readiness probes are correctly configured. Check if they are failing, which could lead to restarts.\n\n5. **Verify Environment Variables**: Ensure that all necessary environment variables are set correctly in the pod specification.\n\n6. **Check Mounted Configs**: If the application relies on mounted configuration files or secrets, ensure they are available and correctly configured.\n\n7. **Adjust Resource Limits**: If the pod is being killed due to resource constraints, consider increasing the allocated resources (CPU/memory) in the pod's specifications.\n\n8. **Test Outside of Kubernetes**: If feasible, test the container outside the Kubernetes environment to see if the issue is related to the application itself or its environment configuration.\n\n9. **Review Application Code**: If possible, investigate the application code to understand why it is crashing. Look for exceptions or errors that might indicate a logic flaw or resource exhaustion.\n\n10. **Scale or Retry**: Depending on your findings, you may want to scale your application (if applicable) or implement retry logic in your application code to handle transient failures.\n\nAfter performing these steps, you should gather enough information to address the underlying cause of the `CrashLoopBackOff` state."
   }
 ]

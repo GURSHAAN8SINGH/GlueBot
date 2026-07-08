@@ -1,0 +1,206 @@
+[
+  {
+    "question": "How to fix Kubernetes cluster issues",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Hi",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "scheduler timeout in kubernetes",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "openstack cinder volume attach fails",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Give me openstack command to check volumes",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "how to check nova computes and how to reboot a nova compute",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Exception in Test Case: (ProvisionException: Unable to provision, see the following errors:  1) [Guice/ErrorInCustomProvider]: PrometheusException: unknown host: prometheus.pccc-tool-329-4-1.sero.gic.ericsson.se   at GuiceBindingModule.providePrometheusApiWrapper(GuiceBindingModule.java:500)   at BeetsGuiceModule.providePccFrameworkObjectsWrapper(BeetsGuiceModule.java:244)       \\_ for 1st parameter   at BeetsGuiceModule.providePccFrameworkObjectsWrapper(BeetsGuiceModule.java:244)   at NodeStepDefinition.(NodeStepDefinition.java:230)       \\_ for 19th parameter   at NodeStepDefinition.class(NodeStepDefinition.java:230)   while locating NodeStepDefinition  Learn more:   https://github.com/google/guice/wiki/ERROR_IN_CUSTOM_PROVIDER  1 error  ====================== Full classname legend: ====================== BeetsGuiceModule:    \"com.ericsson.pc.beets.fw.BeetsGuiceModule\" GuiceBindingModule:  \"com.ericsson.pcc.integration.fw.GuiceBindingModule\" NodeStepDefinition:  \"com.ericsson.pc.beets.testcases.steps.NodeStepDefinition\" PrometheusException: \"com.ericsson.commonlibrary.exception.PrometheusException\" ========================",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "what is the command to start a card instance in shut off state",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "what is the nova command to start a vm instance in shut off state",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Possible reasons for cpu steal for openstack",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "What is TEU_Overload in openstack environment",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "Could you please give me all the NOVA commands ?",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "OpenStack instance stuck in ERROR",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "how to check ingress in kubernetes",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "what is command to set gigabytes quota to -1 in openstack",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "can you give a script to check all the nova computes if they are in ready state or not",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "vepg issue after deployment",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "epg signaling error during test run",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "openstack command to set a server state as active",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "what is kube external error",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "The purpose of this checkpoint The purpose of the checkpoint is to monitor the PFCP session number and rate in UPF (User Plane Function) during BH phase. It passes only when the value is in a specified range. The results depends on the subscriber number and traffic model defined in the case.  We first set the checkpoint range based on the test result when the test case is created then will tune it when it is impacted by expected application behavior change.  Sometimes 1% deviation due to test environment can't be avoided so normally we set the checkpoint range by +- 2%.  EPG Common rule of tuning checkpoints in stability test cases - Cloud Packet Core - PDU Packet Core Confluence  If checkpoint fails, that means the degradation or improvement is more than 2% compared with previous passed build. Need to analyze further to confirm whether there is any unexpected behavior change.  KPIs/Values Checked:           PDCdb_PFCP_sessions  The legacy KPI PDCdb_PFCP_requests_second tracks all three counters combined. It's not easy to do troubleshooting when it failed. So now we check them separately: PDCdb_PFCP_request_create_second: PDCdb_PFCP_request_modify_second: PDCdb_PFCP_request_report_second:",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "pod is failing but I do not know why",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 1 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 2 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 3 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 4 since the last execution does not contain Exit status code. WARN Got exception when running command: 'lts_control stop; echo EXIT:$?;' ERROR Command result response is null. WARN Repeat the Dallas command 5 since the last execution does not contain Exit status code. ERROR The command does not contain exit status code in the response after 5 repetitions. The command exit status is set based on command execution status. WARN Error when trying to uninstall Dallas on host 'pccc-tool-245-1-1', continue cleanup",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "give me nova commands",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "what is the command to hard reboot an openstack instance",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "volume issue",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "give me the command to check pod logs",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "give me the command to list all OpenStack volumes in error state",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "pod is failing",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "something weird is happening with my neutron agent",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "I'm targeting openstack",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "paramiko is not syncing on the dallas tool server",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "what is the command to drain a kubernetes node?",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  },
+  {
+    "question": "there is an RBAC permission denied error on the service account",
+    "answer": "",
+    "status": "unresolved",
+    "note": "Captured from unknown user issue. Fill answer later."
+  }
+]
